@@ -778,11 +778,7 @@ public class HW extends javax.swing.JFrame {
     private String BusinessQuery() {
         if(Category_Set.size() > 0){
             String combobox = (String) BusinessComboBox.getSelectedItem();
-            
-//            String query = "SELECT * FROM BUSINESS b WHERE b.BUSINESS_ID IN (SELECT c.BUSINESS_ID FROM CATEGORIES c ";
-//            String query = "SELECT * FROM BUSINESS b WHERE b.BUSINESS_ID IN (SELECT a.BUSINESS_ID FROM ATTRIBUTES a WHERE a.ATTRIBUTE IN('";
             String query = "SELECT * FROM BUSINESS b WHERE b.BUSINESS_ID IN ((SELECT c.BUSINESS_ID FROM CATEGORIES c WHERE c.CATEGORY IN(";
-//            "SELECT DISTINCT a.ATTRIBUTE FROM ATTRIBUTES a WHERE a.BUSINESS_ID IN(SELECT sc.BUSINESS_ID FROM SUB_CATEGORIES sc WHERE sc.SUB_CATEGORY IN(";
             String c = "";
             for(String i : Category_Set){
                 c += "'" + i + "', ";
@@ -824,91 +820,6 @@ public class HW extends javax.swing.JFrame {
                 }
             }
             query += ")";
-//            c = "";
-//            for(String i : Attribute_Set){
-//                c += "'" + i + "', ";
-//            }
-//            c = c.substring(0, c.length()-2);
-//            query += c + "') AND a.BUSINESS_ID IN(SELECT sc.BUSINESS_ID FROM SUB_CATEGORIES sc WHERE sc.SUB_CATEGORY IN(";
-//            if(SubCategory_Set.size() > 0){
-//                c = "";
-//                for(String i : SubCategory_Set){
-//                    c += "'" + i + "', ";
-//                }
-//                c = c.substring(0, c.length()-2);
-//                query += c + ") AND sc.BUSINESS_ID IN(SELECT c.BUSINESS_ID FROM CATEGORIES c WHERE c.CATEGORY IN(";
-//            if(Category_Set.size() > 0){
-//            c = "";
-//            for(String i : Category_Set){
-//                c += "'" + i + "', ";
-//            }
-//            c = c.substring(0, c.length()-2);
-//            if(combobox.length() == 3){
-//                query += c + ") GROUP BY c.BUSINESS_ID HAVING COUNT(*) >= " + Category_Set.size() + ") GROUP BY sc.BUSINESS_ID HAVING COUNT(*) >= " + SubCategory_Set.size() + ") GROUP BY sc.BUSINESS_ID HAVING COUNT(*) >= " + ")";
-//            }
-//            else{
-//                query += c + "))))";
-//            }
-            
-//            String where = "WHERE ";
-//            String Cate = "(";
-//            for(String i : Category_Set){
-//                Cate += "c.CATEGORY = '" + i + "' " + combobox + " ";
-//            }
-//            if(combobox.length() == 3){
-//                Cate = Cate.substring(0, Cate.length()-5);
-//            }
-//            else{
-//                Cate = Cate.substring(0, Cate.length()-4);
-//            }
-//            if(SubCategory_Set.size() > 0){
-//                where = ",SUB_CATEGORIES sc " + where + "c.BUSINESS_ID = sc.BUSINESS_ID AND ";
-//                Cate += ") AND (";
-//                for(String i : SubCategory_Set){
-//                    i = i.replace("'","''");
-//                    Cate += "sc.SUB_CATEGORY = '" + i + "' " + combobox + " ";
-//                }
-//                if(combobox.length() == 3){
-//                    Cate = Cate.substring(0, Cate.length()-5);
-//                }
-//                else{
-//                    Cate = Cate.substring(0, Cate.length()-4);
-//                }
-//            }
-//            if(Attribute_Set.size() > 0){
-//                where = ",ATTRIBUTES a " + where + "c.BUSINESS_ID = a.BUSINESS_ID AND ";
-//                Cate += ") AND (";
-//                for(String i : Attribute_Set){
-//                    Cate += "a.ATTRIBUTE = '" + i + "' " + combobox + " ";
-//                }
-//                if(combobox.length() == 3){
-//                    Cate = Cate.substring(0, Cate.length()-5);
-//                }
-//                else{
-//                    Cate = Cate.substring(0, Cate.length()-4);
-//                }
-//            }
-//            
-//            query += where + Cate + ") AND ";
-//            String reviewS = "c.BUSINESS_ID IN (SELECT r.BUSINESS_ID FROM REVIEW r WHERE ";
-//            if(!FromTextField.getText().isEmpty() && !FromTextField.getText().equals("YYYY-MM-DD")){
-//                reviewS += "r.R_DATE >= TO_DATE('" + FromTextField.getText() + "', 'YYYY-MM-DD') AND ";
-//            }
-//            if(!StarTextField.getText().isEmpty()){
-//                reviewS += "r.STAR " + (String) StarComboBox.getSelectedItem() + " " + StarTextField.getText() + " AND ";
-//            }
-//            if(!VotesTextField.getText().isEmpty()){
-//                reviewS += "r.VOTE_COUNT " + (String) VotesComboBox.getSelectedItem() + " " + VotesTextField.getText() + " AND ";
-//            }
-//            if(reviewS.length() > 59){
-//                query += reviewS;
-//                query = query.substring(0, query.length()-5);
-//                query += "))";
-//            }
-//            else{
-//                query = query.substring(0, query.length()-5);
-//                query += ")";
-//            }
         return query;
         }
         else{
@@ -1048,13 +959,6 @@ public class HW extends javax.swing.JFrame {
                 
                 ResultTable.setModel(table);
                 ResultTable.removeColumn(ResultTable.getColumnModel().getColumn(0));
-//                MouseListener[] m = ResultTable.getMouseListeners();
-//                int len = m.length;
-//                for(int i = 0; i < len; i++){
-//                    ResultTable.removeMouseListener(m[i]);
-//                }
-
-//                ResultTable.removeMouseListener();
                 if(!ListenerHasCreated){
                     ListenerHasCreated = true;
                     ResultTable.addMouseListener(new MouseAdapter() {
@@ -1174,16 +1078,8 @@ public class HW extends javax.swing.JFrame {
         Attribute_Set.clear();
         if(SubCategory_Set.size() > 0 && SubCategory_Set.size() > 0){
             String combobox = (String) BusinessComboBox.getSelectedItem();
-            //String query = "SELECT DISTINCT a.ATTRIBUTE FROM CATEGORIES c, SUB_CATEGORIES sc, ATTRIBUTES a WHERE a.BUSINESS_ID = sc.BUSINESS_ID AND a.BUSINESS_ID = c.BUSINESS_ID AND (";
             String Cate = "";
-            //SELECT DISTINCT sc.SUB_CATEGORY FROM SUB_CATEGORIES sc WHERE sc.BUSINESS_ID IN (SELECT c.BUSINESS_ID FROM CATEGORIES c WHERE c.CATEGORY IN ('Cafes', 'Restaurants') GROUP BY c.BUSINESS_ID HAVING COUNT(*) >= 2)
-
-//            String q = "SELECT DISTINCT a.ATTRIBUTE FROM ATTRIBUTES a WHERE a.BUSINESS_ID IN(SELECT sc.BUSINESS_ID FROM SUB_CATEGORIES sc WHERE sc.SUB_CATEGORY IN('Italian') AND sc.BUSINESS_ID IN(SELECT c.BUSINESS_ID FROM CATEGORIES c WHERE c.CATEGORY IN('Restaurants'))) ORDER BY a.ATTRIBUTE";
-//            String o = "SELECT DISTINCT a.ATTRIBUTE FROM ATTRIBUTES a WHERE a.BUSINESS_ID IN((SELECT sc.BUSINESS_ID FROM SUB_CATEGORIES sc WHERE sc.SUB_CATEGORY IN('Italian') GROUP BY sc.BUSINESS_ID HAVING COUNT(*) >= 1) INTERSECT (SELECT c.BUSINESS_ID FROM CATEGORIES c WHERE c.CATEGORY IN('Restaurants') GROUP BY c.BUSINESS_ID HAVING COUNT(*) >= 1)) ORDER BY a.ATTRIBUTE";
-//            String query = "SELECT DISTINCT a.ATTRIBUTE FROM ATTRIBUTES a WHERE a.BUSINESS_ID IN(SELECT sc.BUSINESS_ID FROM SUB_CATEGORIES sc WHERE sc.SUB_CATEGORY IN(";
-            
             String query = "SELECT DISTINCT a.ATTRIBUTE FROM ATTRIBUTES a WHERE a.BUSINESS_ID IN ((SELECT c.BUSINESS_ID FROM CATEGORIES c WHERE c.CATEGORY IN(";
-//            "SELECT DISTINCT a.ATTRIBUTE FROM ATTRIBUTES a WHERE a.BUSINESS_ID IN(SELECT sc.BUSINESS_ID FROM SUB_CATEGORIES sc WHERE sc.SUB_CATEGORY IN(";
             String c = "";
             for(String i : Category_Set){
                 c += "'" + i + "', ";
@@ -1209,52 +1105,6 @@ public class HW extends javax.swing.JFrame {
                 query += ")";
             }
             query += ")";
-//            String c = "";
-//            for(String i : SubCategory_Set){
-//                c += "'" + i + "', ";
-//            }
-//            c = c.substring(0, c.length()-2);
-//            query += c + ") AND sc.BUSINESS_ID IN(SELECT c.BUSINESS_ID FROM CATEGORIES c WHERE c.CATEGORY IN(";
-//            
-//            c = "";
-//            for(String i : Category_Set){
-//                c += "'" + i + "', ";
-//            }
-//            c = c.substring(0, c.length()-2);
-//            if(combobox.length() == 3){
-//                query += c + ") GROUP BY c.BUSINESS_ID HAVING COUNT(*) >= " + Category_Set.size() + ") GROUP BY sc.BUSINESS_ID HAVING COUNT(*) >= " + SubCategory_Set.size() + ") ORDER BY a.ATTRIBUTE";
-//            }
-//            else{
-//                query += c + "))) ORDER BY a.ATTRIBUTE";
-//            }
-//            c = c.substring(0, c.length()-2);
-//            if(combobox.length() == 3){
-//                q += c + ") GROUP BY c.BUSINESS_ID HAVING COUNT(*) >= " + Category_Set.size() + ")";
-//            }
-//            else{
-//                q += c + "))";
-//            }
-//            for(String i : Category_Set){
-//                Cate += "c.CATEGORY = '" + i + "' " + combobox + " ";
-//            }
-//            if(combobox.length() == 3){
-//                Cate = Cate.substring(0, Cate.length()-5);
-//            }
-//            else{
-//                Cate = Cate.substring(0, Cate.length()-4);
-//            }
-//            Cate += ") AND (";
-//            for(String i : SubCategory_Set){
-//                i = i.replace("'","''");
-//                Cate += "sc.SUB_CATEGORY = '" + i + "' " + combobox + " ";
-//            }
-//            if(combobox.length() == 3){
-//                Cate = Cate.substring(0, Cate.length()-5);
-//            }
-//            else{
-//                Cate = Cate.substring(0, Cate.length()-4);
-//            }
-//            query += Cate + ") ORDER BY a.ATTRIBUTE";
             System.out.println(query);
             PreparedStatement stmt = con.prepareStatement(query);
             ResultSet result = stmt.executeQuery();
@@ -1325,18 +1175,6 @@ public class HW extends javax.swing.JFrame {
             else{
                 q += c + ")) ORDER BY sc.SUB_CATEGORY";
             }
-//            String query = "SELECT DISTINCT sc.SUB_CATEGORY FROM CATEGORIES c, SUB_CATEGORIES sc WHERE c.BUSINESS_ID = sc.BUSINESS_ID AND (";
-//            String Cate = "";
-//            for(String i : Category_Set){
-//                Cate += "c.CATEGORY = '" + i + "' " + combobox + " ";
-//            }
-//            if(combobox.length() == 3){
-//                Cate = Cate.substring(0, Cate.length()-5);
-//            }
-//            else{
-//                Cate = Cate.substring(0, Cate.length()-4);
-//            }
-//            query += Cate + ") ORDER BY sc.SUB_CATEGORY";
             System.out.println(q);
             PreparedStatement stmt = con.prepareStatement(q);
             ResultSet result = stmt.executeQuery();
